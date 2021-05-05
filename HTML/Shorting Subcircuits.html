@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="initial-scale=1" />
+        <title>Shorting Subcircuits — Keep Talking and Nobody Explodes Module</title>
+        <link rel="stylesheet" type="text/css" href="css/font.css" />
+        <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+        <link rel="stylesheet" type="text/css" href="css/main.css" />
+        <script src="js/ktane-utils.js"></script>
+    </head>
+    <body>
+        <div class="section">
+            <div class="page page-bg-01">
+                <div class="page-header">
+                    <span class="page-header-doc-title">Keep Talking and Nobody Explodes Mod</span>
+                    <span class="page-header-section-title">Shorting Subcircuits</span>
+                </div>
+                <div class="page-content">
+                    <img src="img/Component/Shorting Subcircuits.svg" class="diagram" />
+                    <h2>On the Subject of Shorting Subcircuits</h2>
+                    <p class="flavour-text">This circuit looks complicated, but maybe if I could break it down...</p>
+
+                    <p>
+                        Presented before you is a KTANE_SS series logic board. Each KTANE_SS series board controls a
+                        fundamental part of the bomb, such as the timer, the strike controller, etc. To safely disarm
+                        the module, you must identify the subcircuits of the logic board and short the connections
+                        between them.
+                    </p>
+
+                    <h3>Identifying Subcircuits</h3>
+                    <p>
+                        A <em>subcircuit</em> is a set of integrated circuits (ICs) such that electricity can flow
+                        between every IC in the set, either directly or through another IC in the subcircuit. Note that
+                        electricity only flows along connections in one direction.
+                    </p>
+                    <p>
+                        To identify which ICs electricity can flow to from a particular IC, hold the red multimeter
+                        probe on the "source" IC (where electricity flow originates). This will cause the LED of the
+                        "source" IC to flash and the LEDs of each connected "destination" IC (where electricity flow
+                        terminates) to light up. Remember that electricity only flows in the indicated direction (i.e.,
+                        if electricity flows from IC 02 to IC 05, it does
+                        <em>not</em> flow from IC 05 to IC 02).
+                    </p>
+
+                    <h4>Example of Subcircuit Identification</h4>
+                    <p>
+                        For example, if electricity can flow from IC 01 to IC 02, from IC 02 to ICs 03 and 04, and from
+                        IC 03 to ICs 01 and 04, then ICs 01, 02, and 03 form a subcircuit. Since electricity cannot flow
+                        from IC 04 to ICs 01, 02, or 03, it is not part of the subcircuit.
+                    </p>
+
+                    <h3>Disarming the Module: Shorting Connections</h3>
+                    <p>
+                        To disarm the module, the connections between subcircuits must be shorted. This will involve
+                        shorting individual connections from ICs in one subcircuit to ICs in a different subcircuit.
+                    </p>
+                    <p>
+                        Once you have identified each subcircuit present on the logic board, you must find the single
+                        subcircuit from which electricity cannot flow to another subcircuit. This will be called a
+                        <em>terminal subcircuit</em>. Any subcircuits from which electricity can flow to another
+                        subcircuit will be called <em>internal subcircuits</em>.
+                    </p>
+                </div>
+                <div class="page-footer relative-footer">Page 1 of 2</div>
+            </div>
+            <div class="page page-bg-02">
+                <div class="page-header">
+                    <span class="page-header-doc-title">Keep Talking and Nobody Explodes Mod</span>
+                    <span class="page-header-section-title">Shorting Subcircuits</span>
+                </div>
+                <div class="page-content">
+                    <p>
+                        To short a connection between two ICs, place the red probe on the "source" IC in the internal
+                        subcircuit and place the black probe on the "destination" IC in the terminal subcircuit. The
+                        power supply will automatically short the connection after 2 seconds. Shorting any other
+                        connection or attempting to short a non-existant connection will result in a strike. To cancel a
+                        short, remove the black probe from the IC that it is touching.
+                    </p>
+                    <p>
+                        Note well that to <em>safely</em> disarm the module,
+                        <em>you may only short connections from internal subciruits to terminal subcircuits</em> (i.e.,
+                        you must short all connections which lead <em>into</em> terminal subcircuits).
+                        <em>Shorting a connection may cause an interal subcircuit to become a terminal subcircuit</em>.
+                        Once all connections between subcircuits are <em>safely</em> shorted using the guidelines listed
+                        above, the module will be disarmed.
+                    </p>
+
+                    <h4>Example of Safely Shorting Subcircuits</h4>
+                    <p>Consider three subcircuits which have been identified as follows:</p>
+                    <ul>
+                        <li>Subcircuit A contains ICs 00 and 01</li>
+                        <li>Subcircuit B contains ICs 02 and 03</li>
+                        <li>Subcircuit C contains ICs 04 and 05</li>
+                    </ul>
+                    <p>The following three inter-subcircuit connections have also been identified:</p>
+                    <ul>
+                        <li>Connection from IC 00 to IC 02</li>
+                        <li>Connection from IC 02 to IC 04</li>
+                        <li>Connection from IC 03 to IC 05</li>
+                        <li>Connection from IC 01 to IC 05</li>
+                    </ul>
+                    <p>
+                        In this example, subcircuit C is a terminal subcircuit and subcircuits A and B are internal
+                        subcircuits. Thus, all connections terminating in subcircuit C must be shorted first:
+                        02&RightTeeArrow;04, 03&RightTeeArrow;05, and 01&RightTeeArrow;05.
+                    </p>
+                    <p>
+                        After this, subcircuit C is now disconnected and subcircuit B is now a terminal subcircuit.
+                        Thus, all connections terminating in subcircuit B must be shorted next: 01&RightTeeArrow;05.
+                    </p>
+                    <p>
+                        After this, all connections between subcircuits will have been shorted and the module will
+                        disarm.
+                    </p>
+                </div>
+                <div class="page-footer relative-footer">Page 2 of 2</div>
+            </div>
+        </div>
+    </body>
+</html>
